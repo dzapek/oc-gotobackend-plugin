@@ -1,0 +1,5 @@
+plugin:
+    name: 'trad.gotobackend::lang.plugin.name'
+    description: 'trad.gotobackend::lang.plugin.description'
+    author: Trad
+    icon: icon-sign-in
