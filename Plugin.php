@@ -3,18 +3,16 @@
 namespace Trad\Gotobackend;
 
 use Block;
+use Event;
 use Backend;
 use System\Classes\PluginBase;
-use System\Classes\PluginManager;
-use Illuminate\Support\Facades\Event;
 
 class Plugin extends PluginBase
 {
     public function boot()
     {
         Event::listen('cms.page.beforeDisplay', function ($controller) {
-            $pluginManager = PluginManager::instance();
-            $pluginPath = $pluginManager->getPluginPath('Trad.Gotobackend');
+            $pluginPath = plugins_path() . 'trad/gotobackend';
             $controller->addCss($pluginPath . '/assets/gotobackend.css');
             $this->initJs();
         });
