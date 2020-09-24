@@ -1,0 +1,10 @@
+{% put scripts %}
+<script>
+    var linkBackend = $('<a>',{
+        text: 'goToBackend',
+        title: 'Go to Backend',
+        href: '{{ dump(gotobackend) }}',
+        class: 'gotobackend'
+    }).appendTo('body');
+</script>
+{% endput %}

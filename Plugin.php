@@ -2,6 +2,7 @@
 
 namespace Trad\Gotobackend;
 
+use Twig;
 use Block;
 use Event;
 use Backend;
@@ -20,16 +21,11 @@ class Plugin extends PluginBase
 
     private function initJs()
     {
-        $pathBackend = Backend::url();
+        $backendUrl = Backend::url();
+        $viewsPath = plugins_path() . 'trad/gotobackend/views/default';
 
-        $initJS = <<<JS
-            var linkBackend = $('<a>',{
-                text: 'goToBackend',
-                title: 'Go to Backend',
-                href: '{$pathBackend}',
-                class: 'gotobackend'
-            }).appendTo('body');
-        JS;
+        $html = Twig::parse($viewsPath, ['backendUrl' => $backendUrl]);
+
         Block::append('scripts', '<script>' . $initJS . '</script>');
     }
 
