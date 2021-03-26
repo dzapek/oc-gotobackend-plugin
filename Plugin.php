@@ -2,42 +2,26 @@
 
 namespace Trad\Gotobackend;
 
-use Twig;
-use Block;
 use Event;
 use Backend;
+use DOMDocument;
 use System\Classes\PluginBase;
+use Twig;
 
 class Plugin extends PluginBase
 {
+    public function registerComponents()
+    {
+        return [
+            'Trad\Gotobackend\Components\Gotobackend' => 'Gotobackend',
+        ];
+    }
+
     public function boot()
     {
-        Event::listen('cms.page.beforeDisplay', function ($controller) {
-            $pluginPath = plugins_path() . 'trad/gotobackend';
-            $controller->addCss($pluginPath . '/assets/gotobackend.css');
-            $this->initJs();
+        Event::listen('cms.page.postprocess', function ($controller, $url, $page, $dataHolder) {
+            $page->attributes['Gotobackend'] = [];
+            $page->save();
         });
-    }
-
-    private function initJs()
-    {
-        $backendUrl = Backend::url();
-        $viewsPath = plugins_path() . 'trad/gotobackend/views/default';
-
-        $html = Twig::parse($viewsPath, ['backendUrl' => $backendUrl]);
-
-        Block::append('scripts', '<script>' . $initJS . '</script>');
-    }
-
-    public function registerPermissions()
-    {
-        return []; // Remove this line to activate
-
-        return [
-            'trad.gotobackend.some_permission' => [
-                'tab' => 'gotobackend',
-                'label' => 'Some permission'
-            ],
-        ];
     }
 }
